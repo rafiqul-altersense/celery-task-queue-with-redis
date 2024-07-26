@@ -1,0 +1,14 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+RUN pip install --upgrade pip
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+
+# COPY . .
+# Change to the non-root user
+# USER celeryuser
+# CMD ["celery", "-A", "app.celery", "worker", "--loglevel=info", "-c", "4"]
+# CMD ["celery", "-A", "app.celery", "worker", "--loglevel=info"]
+CMD ["celery", "-A", "app.celery", "worker", "--loglevel=info", "--concurrency=4", "-E"]
+
